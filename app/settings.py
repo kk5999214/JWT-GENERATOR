@@ -18,11 +18,10 @@ class Settings(BaseModel):
     X_UNITY_VERSION: str = "2018.4.11f1"
     TIMEOUT: float = 15.0
 
-    # 11-Region Map for Login Server extraction
+    # 14-Region Unified Map for Login Server extraction
     REGION_MAP: dict = {
         "IND": "https://loginbp.ggpolarbear.com",
         "BD":  "https://loginbp.ggpolarbear.com",
-        "ME":  "https://loginbp.common.ggbluefox.com",
         "PK":  "https://loginbp.ggpolarbear.com",
         "BR":  "https://loginbp.ggpolarbear.com",
         "NA":  "https://loginbp.ggpolarbear.com",
@@ -30,7 +29,10 @@ class Settings(BaseModel):
         "SG":  "https://loginbp.ggpolarbear.com",
         "ID":  "https://loginbp.ggpolarbear.com",
         "CIS": "https://loginbp.ggpolarbear.com",
-        "TH":  "https://loginbp.common.ggbluefox.com",
+        "TW":  "https://loginbp.ggpolarbear.com",      
+        "SAC": "https://loginbp.ggpolarbear.com",      
+        "ME":  "https://loginbp.common.ggbluefox.com", 
+        "TH":  "https://loginbp.common.ggbluefox.com", 
         "GHOST": "https://loginbp.ggblueshark.com"
     }
 
