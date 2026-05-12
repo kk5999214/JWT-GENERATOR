@@ -91,7 +91,7 @@ async def get_token(
 async def post_token(payload: TokenRequest = Body(...)):
     try:
         reg = payload.reg.upper() if payload.reg else "IND"
-        aliases = {"PAK": "PK", "INDIA": "IND", "BGD": "BD", "BRA": "BR"}
+        aliases = {"PAK": "PK", "INDIA": "IND", "BGD": "BD", "BRA": "BR", "VNM": "VN", "SGP": "SG", "THA": "TH"}
         reg = aliases.get(reg, reg)
         
         if payload.uid and payload.password:
