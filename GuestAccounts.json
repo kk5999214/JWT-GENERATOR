@@ -1,68 +1,76 @@
 {
-  "PK": [
-    {
-      "uid": "4813704694",
-      "password": "BITTU__DEV-MHCIXESJB"
-    }
-  ],
   "IND": [
     {
-      "uid": "4816228537",
-      "password": "BITTU__DEV-MTM3UK6D4"
+      "uid": "4816862271",
+      "password": "BITTU_DEV--CILRJYBI"
+    },
+    {
+      "uid": "4817278821",
+      "password": "BITTU_DEV-ALMREFCB"
     }
   ],
   "BD": [
     {
-      "uid": "4816470655",
-      "password": "BITTU__DEV-0M7C56YOK"
+      "uid": "4817309305",
+      "password": "BITTU_DEV-3XISP63B"
+    }
+  ],
+  "PK": [
+    {
+      "uid": "4817313139",
+      "password": "BITTU_DEV-CYYMX2UG"
     }
   ],
   "ME": [
     {
-      "uid": "4816496883",
-      "password": "BITTU__DEV-LIFMZ4JJ9"
-    }
-  ],
-  "VN": [
-    {
-      "uid": "4816503258",
-      "password": "BITTU__DEV-JHQESNJOS"
-    }
-  ],
-  "SG": [
-    {
-      "uid": "4816509830",
-      "password": "BITTU__DEV-73CUF2SV9"
-    }
-  ],
-  "BR": [
-    {
-      "uid": "4816517146",
-      "password": "BITTU__DEV-EHA6TFN5V"
-    }
-  ],
-  "NA": [
-    {
-      "uid": "4816521775",
-      "password": "BITTU__DEV-YXOSL7YYP"
+      "uid": "4817267318",
+      "password": "BITTU_DEV-T54U0EWJ"
     }
   ],
   "ID": [
     {
-      "uid": "4816528252",
-      "password": "BITTU__DEV-PATNCTCZQ"
+      "uid": "4817286966",
+      "password": "BITTU_DEV-M4JA6DTD"
     }
   ],
-  "RU": [
+  "VN": [
     {
-      "uid": "4816539748",
-      "password": "BITTU__DEV-YXBFEJKWD"
+      "uid": "4817291697",
+      "password": "BITTU_DEV-YUMIXF9T"
+    },
+    {
+      "uid": "4817300931",
+      "password": "BITTU_DEV-52THALXT"
     }
   ],
   "TH": [
     {
-      "uid": "4816552989",
-      "password": "BITTU__DEV-OE2W8NDPW"
+      "uid": "4817305174",
+      "password": "BITTU_DEV-XA2UOP4R"
+    }
+  ],
+  "CIS": [
+    {
+      "uid": "4817330168",
+      "password": "BITTU_DEV-WFV5272X"
+    }
+  ],
+  "SAC": [
+    {
+      "uid": "4817337135",
+      "password": "BITTU_DEV-FVE5SNQ5"
+    }
+  ],
+  "TW": [
+    {
+      "uid": "4817319771",
+      "password": "BITTU_DEV-DIJBHQL5"
+    }
+  ],
+  "GHOST": [
+    {
+      "uid": "4817340190",
+      "password": "BITTU_DEV-LX43FSLO"
     }
   ]
 }
