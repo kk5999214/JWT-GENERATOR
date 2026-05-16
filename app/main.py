@@ -25,40 +25,48 @@ accounts_db = load_accounts()
 class TokenRequest(BaseModel):
     uid: Optional[str] = None
     password: Optional[str] = None
-    reg: Optional[str] = "IND"
+    reg: Optional[str] = None
+    region: Optional[str] = None
 
 @app.get("/")
 async def root():
     return {
         "status": "JWT Generator Live (Static Load Balancer) 💀",
         "loaded_regions": list(accounts_db.keys()),
-        "endpoints": "/api/token?reg=IND"
+        "endpoints": "/api/token?region=IND"
     }
 
 @app.get("/api/token")
 async def get_token(
-    reg: str = Query("IND"), 
+    reg: Optional[str] = Query(None), 
+    region: Optional[str] = Query(None),
     uid: Optional[str] = Query(None), 
     password: Optional[str] = Query(None)
 ):
-    reg = reg.upper()
+    # Strict Parameter Enforcement 🛡️
+    target_region = region or reg
+    
+    if not target_region:
+        raise HTTPException(status_code=400, detail="Missing region parameter. You must explicitly specify ?region= (Example: ?region=IND)")
+        
+    target_region = target_region.upper()
     aliases = {"PAK": "PK", "INDIA": "IND", "BGD": "BD", "BRA": "BR", "VNM": "VN", "SGP": "SG", "THA": "TH"}
-    reg = aliases.get(reg, reg)
+    target_region = aliases.get(target_region, target_region)
 
-    # 1. Manual Override Mode (If you pass UID/Pass directly)
+    # 1. Manual Override Mode
     if uid and password:
         try:
-            result = await create_jwt(uid, password, reg)
+            result = await create_jwt(uid, password, target_region)
             return {"developer": "BITTU__DEV", "uid": uid, **result}
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 
-    # 2. Static DB Mode
-    if reg not in accounts_db:
-        raise HTTPException(status_code=404, detail=f"No pre-generated accounts found for region: {reg}")
+    # 2. Static DB Mode (Fails if region is incorrect/unsupported)
+    if target_region not in accounts_db:
+        raise HTTPException(status_code=404, detail=f"Unsupported or incorrect region: {target_region}")
 
-    # Load Balancer: Handles both single dicts and lists of 10+ accounts
-    account_pool = accounts_db[reg]
+    # Load Balancer
+    account_pool = accounts_db[target_region]
     if isinstance(account_pool, list):
         active_account = random.choice(account_pool)
     else:
@@ -68,15 +76,14 @@ async def get_token(
     active_pwd = active_account.get("password")
 
     if not active_uid or not active_pwd:
-        raise HTTPException(status_code=500, detail=f"Malformed account data in GuestAccounts.json for {reg}")
+        raise HTTPException(status_code=500, detail=f"Malformed account data for {target_region}")
 
     try:
-        # Attempt to harvest the JWT
-        result = await create_jwt(active_uid, active_pwd, reg)
+        result = await create_jwt(active_uid, active_pwd, target_region)
         return {
             "developer": "BITTU__DEV",
             "status": "active",
-            "region": reg,
+            "region": target_region,
             "uid": active_uid,
             **result
         }
@@ -90,16 +97,22 @@ async def get_token(
 @app.post("/api/token")
 async def post_token(payload: TokenRequest = Body(...)):
     try:
-        reg = payload.reg.upper() if payload.reg else "IND"
+        target_region = payload.region or payload.reg
+        
+        if not target_region:
+            raise HTTPException(status_code=400, detail="Missing region parameter in JSON payload.")
+            
+        target_region = target_region.upper()
         aliases = {"PAK": "PK", "INDIA": "IND", "BGD": "BD", "BRA": "BR", "VNM": "VN", "SGP": "SG", "THA": "TH"}
-        reg = aliases.get(reg, reg)
+        target_region = aliases.get(target_region, target_region)
         
         if payload.uid and payload.password:
-            result = await create_jwt(payload.uid, payload.password, reg)
+            result = await create_jwt(payload.uid, payload.password, target_region)
             return {"developer": "BITTU__DEV", "uid": payload.uid, **result}
         else:
-            # Route to GET logic if no manual UID provided
-            return await get_token(reg=reg)
+            return await get_token(region=target_region)
             
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
